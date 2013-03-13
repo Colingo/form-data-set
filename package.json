@@ -24,7 +24,8 @@
     "browservefy": "0.0.7",
     "testem": "git://github.com/Raynos/testem",
     "global": "~0.1.5",
-    "is-object": "~0.1.2"
+    "is-object": "~0.1.2",
+    "hyperscript": "~1.0.1"
   },
   "licenses": [
     {

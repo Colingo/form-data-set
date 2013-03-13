@@ -1,23 +1,21 @@
 var test = require("tape")
+var h = require("hyperscript")
 
-var makeElements = require("./util/makeElements")
 var FormData = require("../index")
 
 test("FormData works with <input type='radio' />", function (assert) {
-    var elements = makeElements({
-        foo: ["radio", {
-            as: Array
-            , radios: ["foo", "bar", "baz"]
-            , checked: 0
-            , name: "foo"
-        }]
-        , bar: ["radio", {
-            as: Object
-            , radios: ["foo", "bar", "baz"]
-            , name: "bar"
-            , checked: 1
-        }]
-    })
+    var elements = {
+        foo: {
+            foo: radio("foo", "foo", true)
+            , bar: radio("foo", "bar")
+            , baz: radio("foo", "baz")
+        }
+        , bar: [
+            radio("bar", "foo")
+            , radio("bar", "bar", true)
+            , radio("bar", "baz")
+        ]
+    }
 
     var data = FormData(elements)
 
@@ -28,3 +26,12 @@ test("FormData works with <input type='radio' />", function (assert) {
 
     assert.end()
 })
+
+function radio(name, value, checked) {
+    return h("input", {
+        type: "radio"
+        , name: name
+        , value: value
+        , checked: checked || false
+    })
+}

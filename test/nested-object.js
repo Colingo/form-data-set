@@ -1,15 +1,15 @@
 var test = require("tape")
+var h = require("hyperscript")
 
-var makeElements = require("./util/makeElements")
 var FormData = require("../index")
 
 test("formData works with nested objects", function (assert) {
-    var elements = makeElements({
+    var elements = {
         foo: {
-            bar: ["input", "bar"]
-            , baz: ["input", "baz"]
+            bar: h("input", { value: "bar" })
+            , baz: h("input", { value: "baz" })
         }
-    })
+    }
 
     var data = FormData(elements)
 

@@ -1,15 +1,16 @@
 var test = require("tape")
+var h = require("hyperscript")
 
-var makeElements = require("./util/makeElements")
 var FormData = require("../index")
 
 test("FormData works with <select> elements", function (assert) {
-    var elements = makeElements({
-        foo: ["select", {
-            options: ["one", "two", "three"]
-            , selected: 1
-        }]
-    })
+    var elements = {
+        foo: h("select", [
+            h("option", { value: "one" })
+            , h("option", { value: "two", selected: true })
+            , h("option", { value: "three" })
+        ])
+    }
 
     var data = FormData(elements)
 
