@@ -22,8 +22,9 @@
     "browserify-server": "~2.1.18",
     "browserify": "https://github.com/raynos/node-browserify/tarball/master",
     "browservefy": "0.0.7",
-    "testem": "https://github.com/raynos/testem/tarball/master",
-    "global": "~0.1.5"
+    "testem": "git://github.com/Raynos/testem",
+    "global": "~0.1.5",
+    "is-object": "~0.1.2"
   },
   "licenses": [
     {
