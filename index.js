@@ -7,7 +7,9 @@ function FormData(elements) {
     return Object.keys(elements).reduce(function (acc, key) {
         var elem = elements[key]
 
-        if (containsRadio(elem)) {
+        if (typeof elem === "function") {
+            acc[key] = elem()
+        } else if (containsRadio(elem)) {
             var elems = toList(elem)
             var checked = elems.filter(function (elem) {
                 return elem.checked
