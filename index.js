@@ -7,29 +7,35 @@ function FormData(elements) {
     return Object.keys(elements).reduce(function (acc, key) {
         var elem = elements[key]
 
-        if (typeof elem === "function") {
-            acc[key] = elem()
-        } else if (containsRadio(elem)) {
-            var elems = toList(elem)
-            var checked = elems.filter(function (elem) {
-                return elem.checked
-            })[0] || null
-
-            acc[key] = checked ? checked.value : null
-        } else if (elem.tagName === undefined && elem.nodeType === undefined) {
-            acc[key] = FormData(elem)
-        } else if (elem.tagName === "INPUT" && elem.type === "checkbox") {
-            acc[key] = elem.checked
-        } else if (elem.tagName === "INPUT" && elem.type === "text") {
-            acc[key] = elem.value
-        } else if (elem.tagName === "TEXTAREA") {
-            acc[key] = elem.value
-        } else if (elem.tagName === "SELECT") {
-            acc[key] = elem.value
-        }
+        acc[key] = valueOfElement(elem)
 
         return acc
     }, {})
+}
+
+function valueOfElement(elem) {
+    if (typeof elem === "function") {
+        return elem()
+    } else if (containsRadio(elem)) {
+        var elems = toList(elem)
+        var checked = elems.filter(function (elem) {
+            return elem.checked
+        })[0] || null
+
+        return checked ? checked.value : null
+    } else if (Array.isArray(elem)) {
+        return elem.map(valueOfElement)
+    } else if (elem.tagName === undefined && elem.nodeType === undefined) {
+        return FormData(elem)
+    } else if (elem.tagName === "INPUT" && elem.type === "checkbox") {
+        return elem.checked
+    } else if (elem.tagName === "INPUT" && elem.type === "text") {
+        return elem.value
+    } else if (elem.tagName === "TEXTAREA") {
+        return elem.value
+    } else if (elem.tagName === "SELECT") {
+        return elem.value
+    }
 }
 
 function containsRadio(value) {
