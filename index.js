@@ -27,15 +27,19 @@ function valueOfElement(elem) {
         return elem.map(valueOfElement)
     } else if (elem.tagName === undefined && elem.nodeType === undefined) {
         return FormData(elem)
-    } else if (elem.tagName === "INPUT" && elem.type === "checkbox") {
+    } else if (elem.tagName === "INPUT" && isChecked(elem)) {
         return elem.checked
-    } else if (elem.tagName === "INPUT" && elem.type === "text") {
+    } else if (elem.tagName === "INPUT") {
         return elem.value
     } else if (elem.tagName === "TEXTAREA") {
         return elem.value
     } else if (elem.tagName === "SELECT") {
         return elem.value
     }
+}
+
+function isChecked(elem) {
+    return elem.type === "checkbox" || elem.type === "radio"
 }
 
 function containsRadio(value) {
