@@ -24,11 +24,15 @@ function valueOfElement(elem) {
 
         return checked ? checked.value : null
     } else if (Array.isArray(elem)) {
-        return elem.map(valueOfElement)
+        return elem.map(valueOfElement).filter(filterNull)
     } else if (elem.tagName === undefined && elem.nodeType === undefined) {
         return FormData(elem)
     } else if (elem.tagName === "INPUT" && isChecked(elem)) {
-        return elem.checked
+        if (elem.hasAttribute("value")) {
+            return elem.checked ? elem.value : null
+        } else {
+            return elem.checked
+        }
     } else if (elem.tagName === "INPUT") {
         return elem.value
     } else if (elem.tagName === "TEXTAREA") {
@@ -64,4 +68,8 @@ function toList(value) {
 
 function prop(x) {
     return this[x]
+}
+
+function filterNull(val) {
+    return val !== null
 }
